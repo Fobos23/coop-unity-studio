@@ -59,12 +59,24 @@ templates/
 
 ## Установка
 
-Навык личный: каталог (или ссылка на него) в `%USERPROFILE%\.claude\skills\coop-unity-studio`. Например, ссылка
-на этот репозиторий:
+Навык личный: каталог (или ссылка на него) в `%USERPROFILE%\.claude\skills\coop-unity-studio`. Проще всего —
+клонировать репозиторий прямо туда:
+```
+git clone https://github.com/Fobos23/coop-unity-studio "%USERPROFILE%\.claude\skills\coop-unity-studio"
+```
+Или клонировать куда удобно и поставить ссылку на эту папку:
 ```
 mklink /J "%USERPROFILE%\.claude\skills\coop-unity-studio" "D:\Unity\coop-unity-studio"
 ```
 Дальше в новом проекте: `/coop-unity-studio` и описание игры, или «продолжи игру» в существующем.
+
+Для кадров из видео в фазе стиля (`refs.py youtube`) нужен yt-dlp:
+```
+winget install --id yt-dlp.yt-dlp -e
+```
+Вместе с ним winget ставит его сборку ffmpeg и Deno (без Deno YouTube не отдаёт поток); отдельный ffmpeg не нужен.
+Папки программ попадают в PATH пользователя — уже открытые терминалы и приложения нужно перезапустить. Обновление —
+`winget upgrade yt-dlp.yt-dlp`.
 
 ## Проверено
 
@@ -80,6 +92,8 @@ mklink /J "%USERPROFILE%\.claude\skills\coop-unity-studio" "D:\Unity\coop-unity-
   для `art/` проверены через `git status`.
 - `refs.py`: Steam, Wikimedia и страницы по ссылкам скачиваются, картинки уменьшаются Pillow, палитра по лайкам
   считается. Openverse с этой сети закрыт проверкой Cloudflare — скрипт её не обходит.
+- `refs.py youtube`: поиск по запросу, поток и 4 кадра 1280×720 за 30 с (yt-dlp 2026.10.26 с его сборкой ffmpeg и
+  Deno 2.9.8 из winget).
 - `board.py`: доска с русским интерфейсом открыта во встроенном браузере, отзыв дошёл до сервера и в
   `feedback.json`.
 - `ab.py` / `reveal.py`: пара, отказ без вердикта и при повторном раскрытии, журнал раундов, лист кадров.
@@ -94,5 +108,4 @@ mklink /J "%USERPROFILE%\.claude\skills\coop-unity-studio" "D:\Unity\coop-unity-
 - `unity-dialogs.ps1` проверен только без открытого редактора (окон не нашёл).
 - `Gym.cs` и `gym.sh` скомпилированы и проверены на синтаксис, но в собранной игре ещё не запускались: сцену джима
   загружает код игры (`Gym.RequestedScene`), которого в шаблонах нет.
-- Кадры видео (`refs.py youtube`) не проверены: на этой машине нет yt-dlp и ffmpeg.
 - Проверка навыка свежими агентами (сценарии давления) не проводилась.

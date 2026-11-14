@@ -12,7 +12,10 @@ Paths: references in `art/refs/<set>/`, boards in `art/boards/<board>/`, the bib
 shots in `Builds/autotest/lookdev/shots`. Reference images are a private moodboard: never in the build, never
 published, ignored by git (`art/refs/**` except `sources.json`; `art/boards/**` except `board.json`).
 `<skill>/scripts` = `$SK`. The scripts need Python 3.9+; Pillow (`python -m pip install pillow`, ask first) for
-resizing and palettes; yt-dlp and ffmpeg only for video frames.
+resizing and palettes; yt-dlp and ffmpeg only for video frames: `winget install --id yt-dlp.yt-dlp -e` (ask first)
+brings yt-dlp's own ffmpeg build and Deno (the JS runtime YouTube needs) — do not add a second ffmpeg. winget puts
+the package folders on the user PATH, so shells started before the install need a restart; update with
+`winget upgrade yt-dlp.yt-dlp`, not `yt-dlp -U`.
 
 ## Round 1 — directions
 

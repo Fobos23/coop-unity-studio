@@ -872,7 +872,8 @@ def video_frames(rs: RefSet, src: str, duration: float | None, frames: int, at: 
     """Frames from a stream (direct URL/HLS) via ffmpeg -ss, 3 in parallel.
     meta["url"] / meta["page"] may contain `{t}` — replaced with the frame's second."""
     if not shutil.which("ffmpeg"):
-        print("ffmpeg is required: winget install Gyan.FFmpeg (with the director's consent)")
+        print("ffmpeg is required: `winget install --id yt-dlp.yt-dlp -e` installs yt-dlp's own ffmpeg build with it "
+              "(with the director's consent); restart the shell afterwards")
         return 1
     if at:
         times = at
@@ -926,7 +927,8 @@ YT_ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
 def cmd_youtube(a) -> int:
     rs = RefSet(a.out)
     if not shutil.which("yt-dlp"):
-        print("yt-dlp is required: winget install yt-dlp.yt-dlp (with the director's consent)")
+        print("yt-dlp is required: `winget install --id yt-dlp.yt-dlp -e` (brings its ffmpeg and Deno; with the "
+              "director's consent); restart the shell afterwards")
         return 1
     arg = a.video.strip()
     if YT_ID.match(arg):
@@ -956,8 +958,9 @@ def cmd_youtube(a) -> int:
     at = [parse_ts(x) for x in a.at.split(",")] if a.at else None
     if r.returncode != 0 or len(lines) < 5:
         err = (r.stderr.strip().splitlines() or ["?"])[-1][:200]
-        print(f"youtube: no stream ({err}). Update yt-dlp (`yt-dlp -U`); "
-              f"on \"JS runtime\" — with the director's consent, `winget install DenoLand.Deno`. Taking the video thumbnail.")
+        print(f"youtube: no stream ({err}). Update yt-dlp (`winget upgrade yt-dlp.yt-dlp`; `yt-dlp -U` only for a "
+              f"copy not from winget); on \"JS runtime\" — with the director's consent, `winget install DenoLand.Deno` "
+              f"(the winget yt-dlp brings it). Taking the video thumbnail.")
         m = re.search(r"(?:v=|youtu\.be/|shorts/)([A-Za-z0-9_-]{11})", arg)
         if not m:
             return 1
