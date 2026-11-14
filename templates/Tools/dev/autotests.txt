@@ -1,0 +1,12 @@
+# Autotest registry: one scenario per line. Read by run-suite.sh and by the autotest-runner agent.
+# suite        scenario        tags                      note
+# tags (comma list, no spaces): smoke | slow | manual (needs a human or the internet; run with RUN_MANUAL=1)
+#                               timeout=<s> | flaky:<check>@<yyyy-mm-dd>
+# Rules: every scenario in exactly one suite; every suite has one or two smoke scenarios (<= 5 min, main path,
+# no known flakes); the whole smoke set stays under ~30 min. A new map or big system gets its own suite.
+core           solo            smoke                     one player: lobby, session, result, back
+core           hostleave       -                         host quits mid-session, client gets the message
+net            coop            smoke                     host + client, the whole flow
+net            lanlag          -                         same, client on -netsim 60,15,2
+net            connect         manual                    bad join code, dead host, real join (needs internet)
+net            online          manual                    real Relay join code (needs internet)
