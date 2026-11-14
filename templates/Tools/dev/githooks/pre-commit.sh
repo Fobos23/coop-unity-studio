@@ -14,7 +14,8 @@ NETVERSION_FILE="Assets/Game/Scripts/Net/GameNet.cs"
 LIMITS=""
 NET_PREFAB_LISTS=':(glob)Assets/**/*NetworkPrefabs*.asset'
 JUNK=()
-[ -f "$HERE/hook.conf" ] && . "$HERE/hook.conf"
+# Read without carriage returns: a CRLF checkout (core.autocrlf=true) must not put CR characters into the paths.
+[ -f "$HERE/hook.conf" ] && . <(tr -d '\r' < "$HERE/hook.conf")
 
 EMPTY=4b825dc642cb6eb9a060e54bf8d69288fbee4904
 # An added or removed line with this text in game code (not Editor) changes what goes over the network.

@@ -86,6 +86,12 @@ fresh; G checkout -q -b feat; rpc; gamenet 0.2.0; commit; push; rpc Assets/Game/
 fresh; G checkout -q -b feat; a Assets/Game/Scripts/AI/Enemy.cs "// docs"; commit; push; rpc; check block "branch that never bumped is blocked" "0.1.0"
 fresh; rpc; gamenet 0.2.0; commit; push; rpc Assets/Game/Scripts/Net/Cargo.cs Load; check block "commit on master after a pushed bump needs its own bump" "0.2.0"
 
+# --- hook.conf checked out with CRLF (core.autocrlf=true) still works
+cp "$WORK/hook/hook.conf" "$WORK/hook/hook.conf.lf"; sed -i 's/$/\r/' "$WORK/hook/hook.conf"
+fresh; rpc; gamenet 0.2.0; check pass "CRLF hook.conf: a bumped version is seen"
+fresh; rpc; check block "CRLF hook.conf: a missing bump is still blocked" "network version is 0.1.0"
+mv -f "$WORK/hook/hook.conf.lf" "$WORK/hook/hook.conf"
+
 # --- editor junk
 fresh; a "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset" "atlas: 2"; check block "dirty TMP fallback font is blocked" "LiberationSans SDF - Fallback.asset"
 fresh; a "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset" "atlas: 2"; ENVV="STUDIO_ALLOW=junk"; check pass "STUDIO_ALLOW=junk lets the font through"

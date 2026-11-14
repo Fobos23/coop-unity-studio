@@ -15,7 +15,7 @@ OUT="$ROOT/Builds/autotest"
 mode=$1; arg=$2
 [ -f "$REG" ] || { echo "no registry $REG" >&2; exit 2; }
 
-rows() { grep -v '^[[:space:]]*#' "$REG" | awk 'NF >= 2 { tags = (NF >= 3 ? $3 : "-"); print $1, $2, tags }'; }
+rows() { tr -d '\r' < "$REG" | grep -v '^[[:space:]]*#' | awk 'NF >= 2 { tags = (NF >= 3 ? $3 : "-"); print $1, $2, tags }'; }
 has() { case ",$1," in *",$2,"*) return 0;; esac; return 1; }
 tagval() { echo ",$1," | grep -o ",$2=[^,]*" | head -1 | cut -d= -f2; }
 

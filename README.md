@@ -72,7 +72,8 @@ mklink /J "%USERPROFILE%\.claude\skills\coop-unity-studio" "D:\Unity\coop-unity-
 - `extract-unitypackage.py`: импорт части пака с `.meta` и родными GUID, повтор ничего не перезаписывает.
 - `run-suite.sh`: list, dry, smoke, full и suite на подставном раннере, включая повтор упавшего сценария (FLAKY),
   провалы клиентов и сценарий без SUMMARY.
-- Хук pre-commit: самотест 32 из 32; на 24 настоящих коммитах Zombolic ответы совпали с исходным хуком.
+- Хук pre-commit: самотест 34 из 34 (включая `hook.conf` с переводами строк CRLF); на 24 настоящих коммитах
+  Zombolic ответы совпали с исходным хуком.
 - C#-шаблоны (включая Gym.cs) компилируются (dotnet, netstandard2.1) с библиотеками Unity 6000.3.2f1, NGO 2.13.3,
   Transport и Input System: 0 ошибок, 0 предупреждений.
 - `init.sh`: раскладка в пустой проект (25 файлов), повторный запуск ничего не меняет; правила `.gitignore`
