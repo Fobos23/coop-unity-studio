@@ -122,7 +122,7 @@ if [ -z "$OLD" ] && ! allow bin; then
     # binary the way git itself decides: a NUL byte in the first 8000 bytes
     size=$(git cat-file -s ":$f" 2>/dev/null) || continue
     [ "$size" -gt 8000 ] && size=8000
-    [ "$(git cat-file blob ":$f" | head -c 8000 | tr -d '\000' | wc -c)" -lt "$size" ] && echo "    $f"
+    [ "$(git cat-file blob ":$f" 2>/dev/null | head -c 8000 | tr -d '\000' | wc -c)" -lt "$size" ] && echo "    $f"
   done)
   if [ -n "$bin" ]; then
     say "✖ A binary .asset goes into git as text:" "$bin" \
