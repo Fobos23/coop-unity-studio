@@ -87,6 +87,9 @@ Write the metric lines into the host log in the same card that adds the mechanic
 - During: screen and voice recording, at least one group that has never seen the game.
 - After: answers verbatim in `docs/PLAYTESTS.md`, metric numbers against the gates, a verdict: continue / rework
   (what exactly) / pivot.
+- A map called empty, easy or boring: look at the space before the rules — size, street widths, sightlines, relief,
+  routes, respite (`level-design.md`, "A boring map is a space problem first"). A mechanic on top of a flat, wide map
+  treats the symptom.
 - Stop signals: two playtest rounds without "one more session" → rebuild the core before spending on store page or
   trailer.
 

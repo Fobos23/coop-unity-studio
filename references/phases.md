@@ -108,6 +108,10 @@ through its gym before its PR. At the end of a batch: pending studio lessons go 
 Maps, buildings, characters, props, sounds, music. Each batch: packs first (`assets.md`), its own scenario (map
 reachable, bounds hold, objective → exit → back), render probe against the table, smoke set.
 
+A new map follows the cycle of `level-design.md`: legend → scheme drawn to scale and checked by `map-scheme.py`,
+approved by the director → a passport per place → gray build with the rule check on the scene → detail → playtest
+with the position journal. A new standard is proven on one pilot map before other maps are converted.
+
 ## Phase 7 — Playtest
 
 Read `release.md`. Settings menu minimum, crash/report button, metrics in the host log, a build installed and

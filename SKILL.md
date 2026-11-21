@@ -138,6 +138,7 @@ kills its own game copies.
 | play a gym | `bash Tools/dev/gym.sh <Name> [--coop] [--netsim d,j,loss]` |
 | gauntlet round | `python <skill>/scripts/ab.py pair --round … --ref … --cand …`, verdict, `python <skill>/scripts/reveal.py <round>` |
 | studio lessons and preferences | `python <skill>/scripts/learn.py status\|propose\|accept\|applied\|reject\|prefer\|unprefer` |
+| map scheme with rule checks | `python <skill>/scripts/map-scheme.py <spec.json> [--out DIR] [--strict]` (`references/level-design.md`) |
 | build, test, hand over | `references/ship.md` |
 
 `<skill>` is the folder of this file. Unity CLI details: **REQUIRED SUB-SKILL** `unity:unity-cli` when installed.
@@ -156,6 +157,8 @@ kills its own game copies.
 | `git checkout` of another branch in the shared main checkout | a worktree for that branch |
 | Raising `maxMessageSize` "because a message did not fit" | split the message; the limit stays |
 | Inventing rooms "to improve" the director's sketch | rebuild the sketch; propose changes separately |
+| Treating an empty or boring map with a new mechanic or AI rule | space first: size, street widths, sightlines, relief, routes, respite (`level-design.md`) |
+| Building a map from an idea in the head | legend → scheme checked by `map-scheme.py` and approved → a passport per place → gray build (`level-design.md`) |
 | Killing a running game build to start a test | it is someone's run: wait |
 | A style from generated pictures only, or directions with vague names | real references on a board, opinionated names and rules (`style.md`) |
 | Tuning a mechanic only as the host | play the gym as a client with `-netsim` too |
@@ -179,6 +182,7 @@ kills its own game copies.
 | `references/testing.md` | writing scenarios, the registry, smoke and full runs, flakes |
 | `references/ship.md` | build, test, publish, hand over a build |
 | `references/unity-windows.md` | phase 0, editor automation, worktrees, git and LFS traps |
+| `references/level-design.md` | designing a map: size, sightlines, relief, routes, respite, places with a story, the scheme and passports; a playtest that calls a map empty or boring |
 | `references/maps.md` | a map from a sketch, buildings, NavMesh, bounds |
 | `references/assets.md` | any model, texture, decal, sound, animation; pack import; licences |
 | `references/characters.md` | new body shapes or clothing from pack characters |

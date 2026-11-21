@@ -1,5 +1,8 @@
 # Maps
 
+What to build — size, sightlines, relief, routes, respite, places with a story, the scheme and the passports —
+is in `level-design.md`. This file is how to assemble it.
+
 ## The model: a hand-placed scene + an idempotent step
 
 The director lays out buildings and props by hand (or gives a sketch scene, a drawing, a template of loose props).
@@ -30,6 +33,8 @@ The sketch is the plan: same wall lines, rooms, doors, windows, stairs, roof fea
 
 ## New-map checklist
 
+0. A scheme the director approved and a passport per place (`level-design.md`); the map's check step also runs the
+   level-design rules on the scene.
 1. Scene, map file with its `MapPlan` and menu wrappers; prefix every helper with the map name (a partial builder
    class already has generic names).
 2. Plan geometry derived from the map's own layout, not constants of another map.
