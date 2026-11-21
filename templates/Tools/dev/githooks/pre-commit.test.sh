@@ -103,6 +103,15 @@ fresh; gamenet 0.1.0 1400; check block "raising NgoMtu is blocked" "NgoMtu"
 fresh; gamenet 0.1.0 1000; check pass "lowering NgoMtu passes"
 fresh; transport 1500; check block "raising MaxMessage is blocked" "MaxMessage"
 
+# --- a binary .asset under a line-ending rule (a baked NavMesh lost bytes this way)
+navmesh() { mkdir -p "$R/Assets/Game/Scenes"; printf 'nav\000\000\000data\r\nmore\r\n' > "$R/Assets/Game/Scenes/City_NavMesh.asset"; G add -- Assets/Game/Scenes/City_NavMesh.asset; }
+fresh; w .gitattributes "*.asset eol=lf"; navmesh; check block "binary .asset under eol=lf is blocked" "City_NavMesh.asset"
+fresh; w .gitattributes "*.asset eol=lf
+*NavMesh.asset binary"; navmesh; check pass "binary .asset marked binary passes"
+fresh; navmesh; check pass "binary .asset with no line-ending rule passes (git detects binary itself)"
+fresh; w .gitattributes "*.asset eol=lf"; a Assets/Game/Data/Tuning.asset "speed: 1"; check pass "text .asset under eol=lf passes"
+fresh; w .gitattributes "*.asset eol=lf"; navmesh; ENVV="STUDIO_ALLOW=bin"; check pass "STUDIO_ALLOW=bin lets a binary .asset through"
+
 # --- merges
 fresh; G checkout -q -b side; rpc; gamenet 0.2.0; commit side; G checkout -q master
 rpc Assets/Game/Scripts/Net/Cargo.cs Load; gamenet 0.2.0; commit main; push

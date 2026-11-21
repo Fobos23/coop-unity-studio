@@ -61,6 +61,12 @@ an asset do not change when only C# defaults change: update the asset too.
 
 - `core.autocrlf=true`: an extensionless bash script is checked out with CRLF and dies. Name scripts `*.sh` and
   keep `*.sh text eol=lf` in `.gitattributes`.
+- A rule like `*.asset … eol=lf` without `text` (common Unity templates) converts line endings without looking at
+  the content: every CR LF pair inside a baked binary NavMesh loses its CR and the build log says "Unknown error
+  occurred while loading". Keep `*NavMesh.asset binary`, `NavMesh-*.asset binary`, `LightingData.asset binary`
+  (init.sh adds them; the hook's `bin` check blocks a binary `.asset` committed as text). A damaged file: a binary
+  SerializedFile declares its size at offset 24 (8 bytes big-endian, format ≥ 22) — compare it with the blob
+  size, and take an intact copy from the checkout that baked it or re-bake.
 - Git Bash rewrites `/path` arguments into `C:/Program Files/Git/path`: prefix with `MSYS_NO_PATHCONV=1`.
 - A VPN's DNS may not resolve `github-cloud.s3.amazonaws.com`: pushes with new LFS objects fail ("LFS: Put … no
   such host") and the ref is not pushed (`gh pr create` then says "Head sha can't be blank"). Check

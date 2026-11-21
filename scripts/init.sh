@@ -4,8 +4,8 @@
 # GameName is the product/exe name (Builds/Windows/<GameName>.exe) and the folder Assets/<GameName>/Scripts.
 # Copies: CLAUDE.md (if one exists: CLAUDE.studio.md next to it, merge by hand), .claude/agents/*, docs/*,
 # Tools/dev/* (autotest, run-suite, recompile, logic tests, dialogs, publish, githooks), C# harness into
-# Assets/<GameName>/Scripts/{Dev,Net}. Adds LF rules for *.sh, hook.conf and autotests.txt to .gitattributes and
-# keeps reference images out of git (.gitignore) if missing.
+# Assets/<GameName>/Scripts/{Dev,Net}. Adds LF rules for *.sh, hook.conf and autotests.txt and binary rules for baked
+# NavMesh and lighting assets to .gitattributes and keeps reference images out of git (.gitignore) if missing.
 # After it: bash Tools/dev/githooks/install.sh; bash Tools/dev/githooks/pre-commit.test.sh; recompile in the editor.
 set -e
 SKILL="$(cd "$(dirname "$0")/.." && pwd)"
@@ -70,6 +70,10 @@ fi
 if ! grep -qs 'hook.conf .*eol=lf' "$P/.gitattributes"; then
   echo "  append  .gitattributes: hook.conf and autotests.txt stay LF (bash reads them)"
   [ -n "$DRY" ] || printf 'Tools/dev/githooks/hook.conf text eol=lf\nTools/dev/autotests.txt text eol=lf\n' >> "$P/.gitattributes"
+fi
+if ! grep -qs 'NavMesh.asset .*binary' "$P/.gitattributes"; then
+  echo "  append  .gitattributes: baked NavMesh and lighting assets are binary"
+  [ -n "$DRY" ] || printf '\n# baked assets are binary SerializedFiles: an eol rule on *.asset would cut bytes out of them\n*NavMesh.asset binary\nNavMesh-*.asset binary\nLightingData.asset binary\n' >> "$P/.gitattributes"
 fi
 echo "created $copied, kept $skipped existing"
 echo "next: cd $P && bash Tools/dev/githooks/install.sh && bash Tools/dev/githooks/pre-commit.test.sh"

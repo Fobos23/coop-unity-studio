@@ -21,7 +21,7 @@ Goal: a Unity project this machine can drive without a screen.
 5. **Project settings**: Force Text serialization, visible meta files, Linear colour space, Input System only,
    Windows graphics API list `Direct3D11, Direct3D12` (D3D11 first, see `render.md`), Graphics Jobs off.
 6. **Git**: `git init`, LFS for binaries, `.gitattributes` with `*.sh text eol=lf` (with `core.autocrlf=true` a CRLF
-   bash script dies on its first line), Unity YAML smart merge. `bash <skill>/scripts/init.sh <project> <Game>`
+   bash script dies on its first line) and baked NavMesh/lighting `.asset` files as `binary`, Unity YAML smart merge. `bash <skill>/scripts/init.sh <project> <Game>`
    copies `CLAUDE.md`, agents, `docs/`, `Tools/dev/` and the C# harness; then `bash Tools/dev/githooks/install.sh`.
 7. **Packs**: `python <skill>/scripts/find-packs.py <project>`; show the director what is installed and what sits in
    the Asset Store cache, so asset decisions later start from facts.

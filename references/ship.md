@@ -19,7 +19,7 @@ opens, a 120 s timeout is too short), output to a file, require `fail=0`.
 - `publish-build.py` requires the build newer than the commit and HEAD = origin/<branch>: commit → build → tests →
   push → publish.
 - Commit only your own changes; other uncommitted edits in the checkout → ask the director.
-- The pre-commit hook checks network version, transport limits, junk: fix the cause.
+- The pre-commit hook checks network version, transport limits, junk, binary assets: fix the cause.
 - A map with baked occlusion changed: check/bake before the commit so the baked data goes into the same commit.
 
 ## 3. Build

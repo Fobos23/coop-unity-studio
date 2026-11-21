@@ -6,7 +6,10 @@
 #          branch point (one bump per branch is enough); in a merge where both sides changed the format, from both.
 #   mtu  — transport limits (LIMITS in hook.conf) do not grow.
 #   junk — editor junk (JUNK in hook.conf) is not committed.
-# A false positive: STUDIO_ALLOW="net junk mtu" (only the words needed) before git commit. Never --no-verify.
+#   bin  — a binary .asset (baked NavMesh, lighting) is not committed as text: under a rule with eol but no text
+#          git converts line endings without looking at the content, drops the CR of every CR LF pair inside the
+#          data, and Unity refuses to load the shortened file. Such files need a 'binary' line in .gitattributes.
+# A false positive: STUDIO_ALLOW="net junk mtu bin" (only the words needed) before git commit. Never --no-verify.
 # Past commits: pre-commit.sh --range <old> <new> — the net and mtu checks between two commits.
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
@@ -107,6 +110,25 @@ if [ -z "$OLD" ] && [ ${#JUNK[@]} -gt 0 ] && ! allow junk; then
     say "✖ Editor junk in the commit:" "$junk" \
         "  Restore it: git restore --staged --worktree -- <file> (a new file — git rm --cached and delete)." \
         "  The change is really needed — STUDIO_ALLOW=junk git commit …" ""
+  fi
+fi
+
+# --- bin: a binary .asset that git converts as text without looking at it (text set, or eol set without text)
+if [ -z "$OLD" ] && ! allow bin; then
+  bin=$(gd --cached --name-only --diff-filter=AM "$MTUBASE" -- ':(glob)**/*.asset' | git check-attr --stdin text eol | awk -F': ' '
+      { v[$1, $2] = $3; if (!($1 in seen)) { seen[$1] = 1; order[++n] = $1 } }
+      END { for (i = 1; i <= n; i++) { p = order[i]; t = v[p, "text"]; e = v[p, "eol"]
+            if (t == "set" || (t == "unspecified" && (e == "lf" || e == "crlf"))) print p } }' | while IFS= read -r f; do
+    # binary the way git itself decides: a NUL byte in the first 8000 bytes
+    size=$(git cat-file -s ":$f" 2>/dev/null) || continue
+    [ "$size" -gt 8000 ] && size=8000
+    [ "$(git cat-file blob ":$f" | head -c 8000 | tr -d '\000' | wc -c)" -lt "$size" ] && echo "    $f"
+  done)
+  if [ -n "$bin" ]; then
+    say "✖ A binary .asset goes into git as text:" "$bin" \
+        "  Under a rule with eol and no text git drops the CR of CR LF pairs inside the data: the file gets shorter than" \
+        "  its header and Unity does not load it. Add '<name> binary' to .gitattributes, then git add --renormalize -- <file>." \
+        "  The file really is text — STUDIO_ALLOW=bin git commit …" ""
   fi
 fi
 

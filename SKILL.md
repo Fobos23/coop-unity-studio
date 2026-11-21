@@ -57,7 +57,7 @@ that game's `CLAUDE.md`, `docs/` and project skills, never here.
    `-shots` screenshots. Editor play mode and editor screenshots are not evidence.
 9. **Smoke per card, full regression per stage** (section below).
 10. **Git**: one branch per card in its own worktree; commit after every step; push, PR and merge only on the
-    director's word; the pre-commit hook guards the network version, transport limits and editor junk;
+    director's word; the pre-commit hook guards the network version, transport limits, editor junk and binary assets;
     never `--no-verify`.
 11. **No screen control, no logins, no passwords.** A human step is one action at a time ("Do one thing: … Where:
     … Type done"). VPN, firewall, drivers and system settings are the director's.
