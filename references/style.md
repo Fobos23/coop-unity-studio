@@ -8,6 +8,10 @@ parallel with phase 3 (the net skeleton): both must close before the core slice.
 Then the gates "directions on a board" and "rounds" are skipped with that reason, and you still write
 `docs/ART_BIBLE.md` from what they gave and build the look-dev scene.
 
+**A new place in a game whose look is settled** (a hub, a base, a new map area in phases 5–6) is not a new style:
+first ask the director for 2–3 pictures of what they imagine. Only if they have none, make direction cards — from
+the game's own style (its packs, build shots, the art bible), not from photos of real places or other media.
+
 Paths: references in `art/refs/<set>/`, boards in `art/boards/<board>/`, the bible in `docs/ART_BIBLE.md`, look-dev
 shots in `Builds/autotest/lookdev/shots`. Reference images are a private moodboard: never in the build, never
 published, ignored by git (`art/refs/**` except `sources.json`; `art/boards/**` except `board.json`).
